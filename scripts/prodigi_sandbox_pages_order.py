@@ -23,6 +23,7 @@ import prodigi_sandbox_test as base
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 PRIVATE_WORK_DIR = PROJECT_DIR / "work/prodigi-sandbox-pages"
+RECIPIENT_PATH = PROJECT_DIR / "work/prodigi-recipient.json"
 PAGES_BASE = "https://kylemcdonald.github.io/megalap-print/"
 MERCHANT_REFERENCE = "billion-12x12-paper-test-sandbox-pages"
 
@@ -33,91 +34,23 @@ ASSETS = {
 }
 
 
-def env_assignments() -> dict[str, str]:
-    assignments: dict[str, str] = {}
-    for raw_line in base.ENV_PATH.read_text(encoding="utf-8").splitlines():
-        line = raw_line.strip()
-        if not line or line.startswith("#"):
-            continue
-        if line.startswith("export "):
-            line = line[7:].lstrip()
-        if "=" not in line:
-            continue
-        name, value = line.split("=", 1)
-        name = name.strip().upper()
-        value = value.strip()
-        if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
-            value = value[1:-1]
-        if name and value:
-            assignments[name] = value
-    return assignments
-
-
-def select_field(assignments: dict[str, str], semantic_name: str,
-                 aliases: tuple[str, ...], *, required: bool = True) -> str | None:
-    exact = [assignments[alias] for alias in aliases if assignments.get(alias)]
-    if not exact:
-        suffix = [
-            value
-            for name, value in assignments.items()
-            if any(name.endswith(f"_{alias}") for alias in aliases)
-            and not any(token in name for token in ("API_KEY", "SANDBOX", "LIVE"))
-        ]
-        exact = suffix
-    values = list(dict.fromkeys(exact))
-    if len(values) == 1:
-        return values[0]
-    if not values and not required:
-        return None
-    state = "missing" if not values else "ambiguous"
-    raise RuntimeError(f"Recipient field {semantic_name} is {state} in .env")
-
-
-def normalize_country(value: str) -> str:
-    normalized = value.strip().upper().replace(".", "")
-    if normalized in {"US", "USA", "UNITED STATES", "UNITED STATES OF AMERICA"}:
-        return "US"
-    return normalized
-
-
 def load_recipient() -> dict[str, Any]:
-    assignments = env_assignments()
-    name = select_field(assignments, "name", ("RECIPIENT_NAME", "SHIPPING_NAME", "FULL_NAME", "NAME"))
-    line1 = select_field(
-        assignments,
-        "address line 1",
-        (
-            "ADDRESS_LINE1", "ADDRESS_LINE_1", "ADDRESS1", "ADDRESS_1",
-            "STREET_ADDRESS", "ADDRESS", "LINE1", "LINE_1", "NUMBER",
-        ),
-    )
-    line2 = select_field(
-        assignments,
-        "address line 2",
-        ("ADDRESS_LINE2", "ADDRESS_LINE_2", "ADDRESS2", "ADDRESS_2", "LINE2", "LINE_2"),
-        required=False,
-    )
-    city = select_field(assignments, "city", ("TOWN_OR_CITY", "CITY", "TOWN"))
-    state = select_field(assignments, "state", ("STATE_OR_COUNTY", "STATE", "REGION", "PROVINCE"))
-    postal = select_field(
-        assignments,
-        "postal code",
-        ("POSTAL_OR_ZIP_CODE", "POSTAL_CODE", "POSTCODE", "ZIP_CODE", "ZIP"),
-    )
-    country_value = select_field(assignments, "country", ("COUNTRY_CODE", "COUNTRY"))
-    country = normalize_country(str(country_value))
-    if country != "US":
-        raise RuntimeError("The saved recipient country is not US; refusing to change the requested destination")
-    address: dict[str, str] = {
-        "line1": str(line1),
-        "townOrCity": str(city),
-        "stateOrCounty": str(state),
-        "postalOrZipCode": str(postal),
-        "countryCode": country,
-    }
-    if line2:
-        address["line2"] = line2
-    return {"name": str(name), "address": address}
+    if not RECIPIENT_PATH.is_file():
+        raise RuntimeError(f"Private recipient record not found: {RECIPIENT_PATH}")
+    recipient = load_json(RECIPIENT_PATH)
+    if not isinstance(recipient, dict) or not isinstance(recipient.get("address"), dict):
+        raise RuntimeError("Private recipient record must contain name and address objects")
+    address = recipient["address"]
+    required = ("line1", "townOrCity", "stateOrCounty", "postalOrZipCode", "countryCode")
+    fields = [recipient.get("name"), *(address.get(field) for field in required)]
+    if any(not isinstance(value, str) or not value.strip() for value in fields):
+        raise RuntimeError("Private recipient record has missing or invalid required fields")
+    if address["countryCode"].strip().upper() != "US":
+        raise RuntimeError("The private recipient country is not US")
+    allowed_address_fields = {*required, "line2"}
+    if set(address) - allowed_address_fields:
+        raise RuntimeError("Private recipient address contains unsupported fields")
+    return recipient
 
 
 def save_private_json(path: Path, value: Any, api_key: str) -> None:
@@ -126,6 +59,7 @@ def save_private_json(path: Path, value: Any, api_key: str) -> None:
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     temporary.replace(path)
+    path.chmod(0o600)
 
 
 def load_json(path: Path) -> Any:
