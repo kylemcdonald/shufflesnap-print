@@ -1,6 +1,6 @@
 # MegaLAP print proofs
 
-Deterministic 12-inch print-test assets for comparing three Prodigi paper stocks
+Deterministic 12-inch print-test assets for comparing four Prodigi paper stocks
 in the Prodigi sandbox.
 
 The source artwork is reduced and cropped with Pillow/Lanczos. The generated
@@ -17,4 +17,3 @@ order records are excluded by `.gitignore` and must never be committed.
 python3 scripts/generate_billion_12x12_test_sheet.py
 python3 scripts/generate_prodigi_paper_variants.py
 ```
-

@@ -50,6 +50,13 @@ VARIANTS = (
         accent=(179, 83, 20),
         pale=(251, 236, 221),
     ),
+    PaperVariant(
+        sku="ART-FAP-SAP-12X12",
+        paper="Smooth Art Paper",
+        filename="billion_12x12_art-fap-sap-12x12_300ppi.png",
+        accent=(42, 116, 72),
+        pale=(230, 244, 234),
+    ),
 )
 
 

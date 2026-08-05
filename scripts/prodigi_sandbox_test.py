@@ -35,6 +35,7 @@ CANDIDATES = (
     ("GLOBAL-HPR-12X12", "Hahnemühle Photo Rag"),
     ("GLOBAL-FAP-12X12", "Enhanced Matte Art"),
     ("ART-FAP-BAP-12X12", "Budget Art Paper"),
+    ("ART-FAP-SAP-12X12", "Smooth Art Paper"),
 )
 
 SAMPLE_ASSET = (
@@ -342,7 +343,7 @@ def validate_products(client: ProdigiSandboxClient, api_key: str) -> list[dict[s
     if failures:
         raise RuntimeError("SKU validation failed: " + " | ".join(failures))
     if len(summaries) != len(CANDIDATES):
-        raise RuntimeError("SKU validation did not return all three candidates")
+        raise RuntimeError("SKU validation did not return all requested candidates")
     if not all(summary["shipsToUS"] for summary in summaries):
         unavailable = [summary["sku"] for summary in summaries if not summary["shipsToUS"]]
         raise RuntimeError(f"Validated SKU does not ship to US: {', '.join(unavailable)}")
@@ -360,7 +361,7 @@ def load_validated_products() -> list[dict[str, Any]]:
     expected = [sku.upper() for sku, _ in CANDIDATES]
     actual = [str(product.get("sku", "")).upper() for product in products or []]
     if actual != expected or not all(product.get("shipsToUS") for product in products):
-        raise RuntimeError("Product validation record does not contain the three US-shippable candidates")
+        raise RuntimeError("Product validation record does not contain all requested US-shippable candidates")
     return products
 
 

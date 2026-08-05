@@ -28,7 +28,7 @@
     header p { color: var(--muted); font-size: 1.1rem; }
     .facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
     .facts span { border: 1px solid var(--line); border-radius: 999px; background: #fff; padding: 6px 11px; font-size: .86rem; }
-    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
     article { overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--card); box-shadow: 0 8px 24px rgba(30, 35, 38, .06); }
     article img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-bottom: 1px solid var(--line); }
     .body { padding: 20px; }
@@ -45,7 +45,7 @@
   <main>
     <header>
       <h1>12-inch paper proofs</h1>
-      <p>Three deterministic, SKU-labelled sRGB assets for comparing the same MegaLAP artwork on distinct Prodigi paper stocks.</p>
+      <p>Four deterministic, SKU-labelled sRGB assets for comparing the same MegaLAP artwork on distinct Prodigi paper stocks.</p>
       <div class="facts"><span>3600 × 3600 px</span><span>300 ppi</span><span>embedded sRGB ICC</span><span>PNG</span></div>
     </header>
 
@@ -85,6 +85,18 @@
           <a class="button" href="outputs/prodigi/billion_12x12_art-fap-bap-12x12_300ppi.png">Open PNG</a>
         </div>
       </article>
+
+      <article>
+        <a href="outputs/prodigi/billion_12x12_art-fap-sap-12x12_300ppi.png">
+          <img src="outputs/prodigi/billion_12x12_art-fap-sap-12x12_300ppi.png" alt="Print test sheet labelled Smooth Art Paper" loading="lazy">
+        </a>
+        <div class="body">
+          <h2>Smooth Art Paper</h2>
+          <code>ART-FAP-SAP-12X12</code>
+          <p class="meta">30 × 30 cm · bright white · 240gsm · recommended 3543 × 3543 px</p>
+          <a class="button" href="outputs/prodigi/billion_12x12_art-fap-sap-12x12_300ppi.png">Open PNG</a>
+        </div>
+      </article>
     </section>
 
     <footer>
@@ -94,4 +106,3 @@
   </main>
 </body>
 </html>
-
