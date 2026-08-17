@@ -23,7 +23,7 @@ import prodigi_sandbox_test as base
 
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
-PRIVATE_WORK_DIR = PROJECT_DIR / "work/prodigi-sandbox-20x20-hpr"
+PRIVATE_WORK_DIR = PROJECT_DIR / "work/prodigi-sandbox-20x20-hpr-dithered"
 RECIPIENT_PATH = PROJECT_DIR / "work/prodigi-recipient.json"
 PAGES_BASE = "https://kylemcdonald.github.io/megalap-print/"
 ASSET_PATH = "outputs/prodigi/billion_20x20_global-hpr-20x20_300ppi.png"
@@ -31,7 +31,7 @@ ASSET_URL = urllib.parse.urljoin(PAGES_BASE, ASSET_PATH)
 
 SKU = "GLOBAL-HPR-20X20"
 PAPER_NAME = "Hahnemühle Photo Rag"
-MERCHANT_REFERENCE = "billion-20x20-hpr-sandbox"
+MERCHANT_REFERENCE = "billion-20x20-hpr-dithered-sandbox"
 ALLOWED_QUOTE_ISSUES = {"destinationCountryCode.UsSalesTaxWarning"}
 
 
@@ -310,7 +310,7 @@ def expected_order_payload(recipient: dict[str, Any], idempotency_key: str,
         "recipient": recipient,
         "items": [
             {
-                "merchantReference": "billion-20x20-hpr",
+                "merchantReference": "billion-20x20-hpr-dithered",
                 "sku": SKU,
                 "copies": 1,
                 "sizing": "fillPrintArea",
@@ -320,8 +320,9 @@ def expected_order_payload(recipient: dict[str, Any], idempotency_key: str,
         ],
         "metadata": {
             "purpose": "Validates the 20-inch Hahnemühle Photo Rag workflow",
-            "artworkId": "billion_31623_seed0_interp75_variant12_1px",
+            "artworkId": "billion_31623_seed0_interp75_variant12_1px_dithered",
             "canvas": "6000x6000_srgb_300ppi_white_2in_margin",
+            "colorDither": "per-point independent RGB uniform [-0.5,+0.5), seed 0",
             "assetSha256": asset_hash,
             "environment": "Prodigi sandbox",
             "assetHosting": "Public HTTPS via GitHub Pages",
