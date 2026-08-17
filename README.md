@@ -35,10 +35,9 @@ Configured 20-inch variants live in `scripts/prodigi_20x20_config.py`:
 ## Prodigi workflows
 
 The sandbox scripts validate products, quote, and exercise order creation
-without charging or fulfillment. `prodigi_live_four_paper_order.py` is a
-separate live-only workflow with strict host checks, a pre-tax quote limit, a
-persistent idempotency key, and private records under
-`work/prodigi-live-four-paper/`.
+without charging or fulfillment. Live ordering uses separate live-only
+workflows with strict host checks, quote limits, persistent idempotency keys,
+and private records under `work/`.
 
 The reusable 20-inch sandbox workflow supports configured paper variants and
 stores each run under an asset-hash-specific private directory. A new render
@@ -60,17 +59,47 @@ record. Use `--paper hpr` for Hahnemühle Photo Rag or `--paper fap` for Enhance
 Matte Art. The older `prodigi_sandbox_20x20_hpr_order.py` command remains as an
 HPR-compatible wrapper.
 
-Run the live stages separately and inspect the quote before authorizing the
-order stage:
+Promote the exact paper, asset hash, recipient, and fulfillment settings from a
+completed 20-inch sandbox run with the guarded live workflow:
+
+```bash
+python3 scripts/prodigi_live_20x20_order.py preflight --paper fap
+python3 scripts/prodigi_live_20x20_order.py quote --paper fap
+# Inspect and explicitly authorize the live quote before continuing.
+python3 scripts/prodigi_live_20x20_order.py order --paper fap
+```
+
+The preflight requires a matching sandbox record under the asset-hash-specific
+`work/` directory. It compares the private recipient, SKU, copies, sizing,
+attributes, public asset URL, and shipping method with that sandbox payload. It
+also verifies that the public HTTPS asset byte-matches the approved local PNG
+and validates the SKU against Prodigi's live catalog. The live quote must be no
+more than two hours old, may contain only Prodigi's documented US sales-tax
+warning, and cannot exceed the configured USD safety limit.
+
+The order stage writes a newly generated UUID and complete private payload to
+`work/prodigi-live-20x20-<paper>-<asset-hash>/` before making the order request.
+It refuses another POST after a response has been saved. If creation succeeds
+but the initial retrieval is interrupted, resume only the read with:
+
+```bash
+python3 scripts/prodigi_live_20x20_order.py retrieve --paper fap
+```
+
+The quote endpoint identifies possible US sales tax but cannot calculate it
+from only a destination country. Prodigi can add the actual tax after receiving
+the full live order address, so treat the quote total as potentially pre-tax.
+The live order stage charges the configured account and starts physical
+fulfillment; never run it as an automated test.
+
+The earlier four-paper 12-inch comparison has its own live workflow. Run its
+stages separately and inspect the quote before authorizing the order stage:
 
 ```bash
 python3 scripts/prodigi_live_four_paper_order.py preflight
 python3 scripts/prodigi_live_four_paper_order.py quote
 python3 scripts/prodigi_live_four_paper_order.py order
 ```
-
-The live order stage charges the configured account and starts physical
-fulfillment. Never run it as an automated test.
 
 ## Branded packaging inserts
 
