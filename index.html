@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MegaLAP · 12-inch paper proofs</title>
-  <meta name="description" content="SKU-labelled 12-inch print-test assets for a Prodigi paper comparison.">
+  <title>MegaLAP · print assets</title>
+  <meta name="description" content="Print-ready MegaLAP assets and SKU-labelled paper proofs.">
   <style>
     :root {
       color-scheme: light;
@@ -29,6 +29,8 @@
     .facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
     .facts span { border: 1px solid var(--line); border-radius: 999px; background: #fff; padding: 6px 11px; font-size: .86rem; }
     .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+    .featured { width: min(760px, 100%); margin: 0 0 48px; }
+    .section-title { margin: 0 0 16px; font-size: 1.4rem; }
     article { overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--card); box-shadow: 0 8px 24px rgba(30, 35, 38, .06); }
     article img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-bottom: 1px solid var(--line); }
     .body { padding: 20px; }
@@ -44,11 +46,27 @@
 <body>
   <main>
     <header>
-      <h1>12-inch paper proofs</h1>
-      <p>Four deterministic, SKU-labelled sRGB assets for comparing the same MegaLAP artwork on distinct Prodigi paper stocks.</p>
-      <div class="facts"><span>3600 × 3600 px</span><span>300 ppi</span><span>embedded sRGB ICC</span><span>PNG</span></div>
+      <h1>MegaLAP print assets</h1>
+      <p>Deterministic, color-managed artwork prepared for Prodigi fine-art printing and paper comparisons.</p>
+      <div class="facts"><span>300 ppi</span><span>embedded sRGB ICC</span><span>PNG</span><span>pixel-verified</span></div>
     </header>
 
+    <h2 class="section-title">20-inch artwork</h2>
+    <section class="featured" aria-label="20-inch print asset">
+      <article>
+        <a href="outputs/prodigi/billion_20x20_global-hpr-20x20_300ppi.png">
+          <img src="outputs/prodigi/billion_20x20_global-hpr-20x20_300ppi.png" alt="Billion MegaLAP artwork centered on a white square canvas" loading="eager">
+        </a>
+        <div class="body">
+          <h2>Hahnemühle Photo Rag</h2>
+          <code>GLOBAL-HPR-20X20</code>
+          <p class="meta">20 × 20 in · 6000 × 6000 px · 2-inch white margin · artwork pixels unchanged</p>
+          <a class="button" href="outputs/prodigi/billion_20x20_global-hpr-20x20_300ppi.png">Open print PNG</a>
+        </div>
+      </article>
+    </section>
+
+    <h2 class="section-title">12-inch paper proofs</h2>
     <section class="grid" aria-label="Paper-specific proof assets">
       <article>
         <a href="outputs/prodigi/billion_12x12_global-hpr-12x12_300ppi.png">
