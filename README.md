@@ -16,7 +16,8 @@ order records are excluded by `.gitignore` and must never be committed.
 ```bash
 python3 scripts/generate_billion_12x12_test_sheet.py
 python3 scripts/generate_prodigi_paper_variants.py
-python3 scripts/prepare_billion_20x20_print.py
+python3 scripts/prepare_billion_20x20_print.py --paper hpr
+python3 scripts/prepare_billion_20x20_print.py --paper fap
 ```
 
 The 20-inch preparation script validates the selected 4800 × 4800 RGB sRGB
@@ -32,14 +33,25 @@ separate live-only workflow with strict host checks, a pre-tax quote limit, a
 persistent idempotency key, and private records under
 `work/prodigi-live-four-paper/`.
 
-The single-print 20-inch Photo Rag sandbox workflow is staged separately:
+The reusable 20-inch sandbox workflow supports configured paper variants and
+stores each run under an asset-hash-specific private directory. A new render
+therefore receives a new persistent idempotency key without disturbing prior
+order records:
 
 ```bash
-python3 scripts/prodigi_sandbox_20x20_hpr_order.py address
-python3 scripts/prodigi_sandbox_20x20_hpr_order.py product
-python3 scripts/prodigi_sandbox_20x20_hpr_order.py quote
-python3 scripts/prodigi_sandbox_20x20_hpr_order.py order
+python3 scripts/prepare_billion_20x20_print.py --paper fap
+# Commit and publish the generated asset through GitHub Pages.
+python3 scripts/prodigi_sandbox_20x20_order.py asset --paper fap
+python3 scripts/prodigi_sandbox_20x20_order.py run --paper fap
 ```
+
+The `asset` stage requires the public HTTPS PNG to match the local bytes. The
+`run` stage validates the private recipient and product, requests a Budget
+quote, persists the order payload and UUID, creates one sandbox order, and
+retrieves it once. It refuses a second order POST for the same paper-and-asset
+record. Use `--paper hpr` for Hahnemühle Photo Rag or `--paper fap` for Enhanced
+Matte Art. The older `prodigi_sandbox_20x20_hpr_order.py` command remains as an
+HPR-compatible wrapper.
 
 Run the live stages separately and inspect the quote before authorizing the
 order stage:

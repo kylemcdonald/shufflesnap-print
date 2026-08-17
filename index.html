@@ -29,7 +29,7 @@
     .facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
     .facts span { border: 1px solid var(--line); border-radius: 999px; background: #fff; padding: 6px 11px; font-size: .86rem; }
     .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-    .featured { width: min(760px, 100%); margin: 0 0 48px; }
+    .featured-grid { margin-bottom: 48px; }
     .section-title { margin: 0 0 16px; font-size: 1.4rem; }
     article { overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--card); box-shadow: 0 8px 24px rgba(30, 35, 38, .06); }
     article img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-bottom: 1px solid var(--line); }
@@ -52,7 +52,7 @@
     </header>
 
     <h2 class="section-title">20-inch artwork</h2>
-    <section class="featured" aria-label="20-inch print asset">
+    <section class="grid featured-grid" aria-label="20-inch print assets">
       <article>
         <a href="outputs/prodigi/billion_20x20_global-hpr-20x20_300ppi.png">
           <img src="outputs/prodigi/billion_20x20_global-hpr-20x20_300ppi.png" alt="Billion MegaLAP artwork centered on a white square canvas" loading="eager">
@@ -62,6 +62,17 @@
           <code>GLOBAL-HPR-20X20</code>
           <p class="meta">20 × 20 in · 6000 × 6000 px · 2-inch white margin · artwork pixels unchanged</p>
           <a class="button" href="outputs/prodigi/billion_20x20_global-hpr-20x20_300ppi.png">Open print PNG</a>
+        </div>
+      </article>
+      <article>
+        <a href="outputs/prodigi/billion_20x20_global-fap-20x20_300ppi.png">
+          <img src="outputs/prodigi/billion_20x20_global-fap-20x20_300ppi.png" alt="Billion MegaLAP artwork prepared for Enhanced Matte Art paper" loading="eager">
+        </a>
+        <div class="body">
+          <h2>Enhanced Matte Art</h2>
+          <code>GLOBAL-FAP-20X20</code>
+          <p class="meta">20 × 20 in · 6000 × 6000 px · 2-inch white margin · artwork pixels unchanged</p>
+          <a class="button" href="outputs/prodigi/billion_20x20_global-fap-20x20_300ppi.png">Open print PNG</a>
         </div>
       </article>
     </section>
