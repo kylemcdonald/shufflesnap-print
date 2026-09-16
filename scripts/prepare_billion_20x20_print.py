@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Center the selected MegaLAP render on a print-ready square white canvas."""
+"""Center the selected ShuffleSnap render on a print-ready square white canvas."""
 
 from __future__ import annotations
 
@@ -15,9 +15,9 @@ from prodigi_20x20_config import Paper20x20, get_paper, paper_keys
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 DEFAULT_SOURCE = (
     PROJECT_DIR.parent
-    / "megalap-paper"
+    / "shufflesnap-paper"
     / "benchmarks/results/renders"
-    / "billion_megalap_31623_seed0_interp75_aa_4800"
+    / "billion_shufflesnap_31623_seed0_interp75_aa_4800"
     / "12_disk_4x_19200_1px_points_box_area_4800.png"
 )
 PPI = 300
@@ -29,7 +29,7 @@ BACKGROUND = (255, 255, 255)
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Center a 4800px MegaLAP render on a 6000px white sRGB canvas."
+        description="Center a 4800px ShuffleSnap render on a 6000px white sRGB canvas."
     )
     parser.add_argument(
         "--paper",
@@ -117,7 +117,7 @@ def save_output(canvas: Image.Image, output: Path, source: Path,
     if temporary.exists():
         raise FileExistsError(f"Incomplete temporary output exists: {temporary}")
     metadata = PngImagePlugin.PngInfo()
-    metadata.add_text("Title", f"Billion MegaLAP — 20×20 inch {paper.paper} print")
+    metadata.add_text("Title", f"Billion ShuffleSnap — 20×20 inch {paper.paper} print")
     metadata.add_text("SourceArtwork", source.name)
     metadata.add_text("ProdigiSKU", paper.sku)
     metadata.add_text("PaperType", paper.paper)

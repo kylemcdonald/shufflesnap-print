@@ -36,7 +36,7 @@ API_HOST = "api.prodigi.com"
 API_PREFIX = "/v4.0"
 API_BASE = f"{API_SCHEME}://{API_HOST}{API_PREFIX}"
 
-PAGES_BASE = "https://kylemcdonald.github.io/megalap-print/"
+PAGES_BASE = "https://kylemcdonald.github.io/shufflesnap-print/"
 MERCHANT_REFERENCE = "billion-12x12-four-paper-test-live"
 MAX_PRETAX_QUOTE_USD = Decimal("60.00")
 ALLOWED_QUOTE_ISSUES = {"destinationCountryCode.UsSalesTaxWarning"}
@@ -208,7 +208,7 @@ class ProdigiLiveClient:
         headers = {
             "Accept": "application/json",
             "X-API-Key": self._api_key,
-            "User-Agent": "megalap-print-prodigi-live-order/1.0",
+            "User-Agent": "shufflesnap-print-prodigi-live-order/1.0",
         }
         if payload is not None:
             body = json.dumps(payload, separators=(",", ":")).encode("utf-8")
@@ -397,7 +397,7 @@ def validate_public_assets() -> None:
         if parsed.scheme != "https" or parsed.hostname != "kylemcdonald.github.io":
             raise RuntimeError(f"Unexpected public asset URL for {sku}")
         request = urllib.request.Request(
-            url, headers={"User-Agent": "megalap-prodigi-live-asset-check/1.0"}
+            url, headers={"User-Agent": "shufflesnap-prodigi-live-asset-check/1.0"}
         )
         with opener.open(request, timeout=90) as response:
             remote = response.read()

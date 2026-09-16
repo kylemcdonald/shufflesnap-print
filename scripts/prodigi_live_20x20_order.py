@@ -27,7 +27,7 @@ from prodigi_20x20_config import Paper20x20, get_paper, paper_keys
 
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
-PAGES_BASE = "https://kylemcdonald.github.io/megalap-print/"
+PAGES_BASE = "https://kylemcdonald.github.io/shufflesnap-print/"
 ALLOWED_QUOTE_ISSUES = {"destinationCountryCode.UsSalesTaxWarning"}
 MAX_QUOTE_TOTAL_USD = Decimal("40.00")
 MAX_QUOTE_AGE = timedelta(hours=2)
@@ -88,7 +88,7 @@ def validate_public_asset(context: RunContext) -> None:
     opener = urllib.request.build_opener(live.PagesOnlyRedirectHandler())
     request = urllib.request.Request(
         context.asset_url,
-        headers={"User-Agent": "megalap-prodigi-live-20x20-asset-check/1.0"},
+        headers={"User-Agent": "shufflesnap-prodigi-live-20x20-asset-check/1.0"},
     )
     with opener.open(request, timeout=90) as response:
         remote = response.read()

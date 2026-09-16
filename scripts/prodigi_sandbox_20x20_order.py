@@ -26,7 +26,7 @@ from prodigi_20x20_config import Paper20x20, get_paper, paper_keys
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 RECIPIENT_PATH = PROJECT_DIR / "work/prodigi-recipient.json"
-PAGES_BASE = "https://kylemcdonald.github.io/megalap-print/"
+PAGES_BASE = "https://kylemcdonald.github.io/shufflesnap-print/"
 ALLOWED_QUOTE_ISSUES = {"destinationCountryCode.UsSalesTaxWarning"}
 
 
@@ -314,7 +314,7 @@ def validate_public_asset(context: RunContext) -> str:
         raise RuntimeError("Blocked unexpected public asset origin")
     request = urllib.request.Request(
         context.asset_url,
-        headers={"User-Agent": "megalap-prodigi-asset-check/1.0"},
+        headers={"User-Agent": "shufflesnap-prodigi-asset-check/1.0"},
     )
     with urllib.request.urlopen(request, timeout=90) as response:
         remote = response.read()

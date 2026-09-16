@@ -24,7 +24,7 @@ import prodigi_sandbox_test as base
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 PRIVATE_WORK_DIR = PROJECT_DIR / "work/prodigi-sandbox-pages"
 RECIPIENT_PATH = PROJECT_DIR / "work/prodigi-recipient.json"
-PAGES_BASE = "https://kylemcdonald.github.io/megalap-print/"
+PAGES_BASE = "https://kylemcdonald.github.io/shufflesnap-print/"
 MERCHANT_REFERENCE = "billion-12x12-paper-test-sandbox-pages"
 
 ASSETS = {
@@ -79,7 +79,7 @@ def validate_public_assets() -> None:
         parsed = urllib.parse.urlsplit(url)
         if parsed.scheme != "https" or parsed.hostname != "kylemcdonald.github.io":
             raise RuntimeError(f"Blocked unexpected asset host for {sku}")
-        request = urllib.request.Request(url, headers={"User-Agent": "megalap-prodigi-asset-check/1.0"})
+        request = urllib.request.Request(url, headers={"User-Agent": "shufflesnap-prodigi-asset-check/1.0"})
         with urllib.request.urlopen(request, timeout=60) as response:
             remote = response.read()
             content_type = response.headers.get("Content-Type", "")

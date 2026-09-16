@@ -17,10 +17,10 @@ from PIL import Image, ImageCms, ImageDraw, ImageFont, ImageStat, PngImagePlugin
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = (
     ROOT
-    / "megalap-paper/benchmarks/results/renders/"
-    / "billion_megalap_31623_seed0_test_interp75.png"
+    / "shufflesnap-paper/benchmarks/results/renders/"
+    / "billion_shufflesnap_31623_seed0_test_interp75.png"
 )
-OUTPUT_DIR = ROOT / "megalap-print/outputs"
+OUTPUT_DIR = ROOT / "shufflesnap-print/outputs"
 PNG_OUTPUT = OUTPUT_DIR / "billion_12x12_print_test_sheet_300ppi.png"
 JPEG_OUTPUT = OUTPUT_DIR / "billion_12x12_print_test_sheet_300ppi.jpg"
 
@@ -249,7 +249,7 @@ def build_sheet(source: Image.Image) -> Image.Image:
     text(
         draw,
         (102, 174),
-        "12 × 12 in  •  300 ppi  •  sRGB  •  source: billion_megalap_31623_seed0_test_interp75",
+        "12 × 12 in  •  300 ppi  •  sRGB  •  source: billion_shufflesnap_31623_seed0_test_interp75",
         typeface=F_SUBTITLE,
         fill=MUTED,
     )

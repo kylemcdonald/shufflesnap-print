@@ -174,7 +174,7 @@ class ProdigiSandboxClient:
         headers = {
             "Accept": "application/json",
             "X-API-Key": self._api_key,
-            "User-Agent": "megalap-print-prodigi-sandbox-test/1.0",
+            "User-Agent": "shufflesnap-print-prodigi-sandbox-test/1.0",
         }
         if payload is not None:
             body = json.dumps(payload, separators=(",", ":")).encode("utf-8")

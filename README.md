@@ -1,6 +1,6 @@
-# MegaLAP print assets
+# ShuffleSnap print assets
 
-Deterministic print assets for MegaLAP artwork, including 12-inch paper-stock
+Deterministic print assets for ShuffleSnap artwork, including 12-inch paper-stock
 proofs and 20-inch Hahnemühle Photo Rag and Enhanced Matte Art prints.
 
 The 12-inch proof artwork is reduced and cropped with Pillow/Lanczos. Those
@@ -137,7 +137,7 @@ Branding sets and their default assignment to Print API orders are created and
 managed in the Prodigi dashboard, not through an API endpoint. A create-order
 payload can provide per-order `branding` URLs to override those defaults.
 
-The current MegaLAP order script intentionally does **not** send `branding`.
+The current ShuffleSnap order script intentionally does **not** send `branding`.
 Add it only after the quote-schema issue below is resolved and print-ready
 insert assets have been published and hash-verified.
 
